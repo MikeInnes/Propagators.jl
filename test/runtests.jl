@@ -1,6 +1,5 @@
-using Propagators
-using Test
+using Propagators, Test
 
 @testset "Propagators.jl" begin
-    # Write your tests here.
+  include("basics.jl")
 end
