@@ -1,5 +1,13 @@
 using Propagators: Cell, propagator, propagate!, block, constant, switch
 
+# function sqrt_heron(x)
+#   g = x/x
+#   while !(g^2 ≈ x)
+#     g = (x/g+g)/2
+#   end
+#   return g
+# end
+
 function heron_step(x, g, h)
   block(x, g) do
     xdg = Cell()
