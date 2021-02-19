@@ -44,7 +44,7 @@ function addcontent!(cell, increment)
   if cell[] == answer
     return
   elseif answer == contradiction
-    error("Contradiction")
+    error("Contradiction between $(cell.content) and $increment")
   else
     cell.content = answer
     alert!(cell.neighbours...)
