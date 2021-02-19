@@ -25,3 +25,41 @@ let
   propagate!()
   @test y[] ≈ sqrt(2)
 end
+
+using Propagators: constraint, quadratic
+
+let
+  x = Cell()
+  y = Cell()
+  quadratic(x, y)
+  x[] = 2
+  propagate!()
+  @test y[] == 4
+
+  x = Cell()
+  y = Cell()
+  quadratic(x, y)
+  y[] = 4
+  propagate!()
+  @test x[] == 2
+end
+
+let
+  x = Cell()
+  y = Cell()
+  z = Cell()
+  constraint(*)(x, y, z)
+  x[] = 2
+  y[] = 3
+  propagate!()
+  @test z[] == 6
+
+  x = Cell()
+  y = Cell()
+  z = Cell()
+  constraint(*)(x, y, z)
+  x[] = 2
+  z[] = 6
+  propagate!()
+  @test y[] == 3
+end

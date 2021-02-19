@@ -34,3 +34,24 @@ function conditional(p, t, f, out)
 end
 
 switch(p, t, out) = conditional(p, t, Cell(), out)
+
+function constraint(::typeof(*))
+  function (x, y, xy)
+    propagator(*)(x, y, xy)
+    propagator(/)(xy, x, y)
+    propagator(/)(xy, y, x)
+  end
+end
+
+function constraint(::typeof(+))
+  function (x, y, xy)
+    propagator(+)(x, y, xy)
+    propagator(-)(xy, x, y)
+    propagator(-)(xy, y, x)
+  end
+end
+
+function quadratic(x, x²)
+  propagator(x -> x^2)(x, x²)
+  propagator(sqrt)(x², x)
+end
