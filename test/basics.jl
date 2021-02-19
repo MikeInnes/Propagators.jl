@@ -63,3 +63,20 @@ let
   propagate!()
   @test y[] == 3
 end
+
+let
+  x = Cell()
+  y = Cell()
+  z = Cell()
+  constraint(*)(x, y, z)
+  x[] = 2..5
+  y[] = 3..6
+  propagate!()
+  @test z[] == x[]*y[]
+
+  z[] = interval(5, 10)
+  length(Propagators.workqueue)
+  propagate!()
+  @test x[] == interval(2, 10/3)
+  @test y[] == interval(3, 5)
+end

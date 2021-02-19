@@ -13,9 +13,13 @@ alert!() = return
 alert!(ps...) = push!(workqueue, ps...)
 
 function propagate!()
-  while !isempty(workqueue)
-    p = pop!(workqueue)
-    p.activate!()
+  try
+    while !isempty(workqueue)
+      p = pop!(workqueue)
+      p.activate!()
+    end
+  finally
+    empty!(workqueue)
   end
 end
 
