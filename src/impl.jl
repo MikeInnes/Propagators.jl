@@ -56,7 +56,7 @@ Base.getindex(c::Cell) = c.content
 struct Propagator
   inputs
   activate!
-  function Propagator(inputs, activate!)
+  function Propagator(activate!, inputs)
     me = new(inputs, activate!)
     for cell in inputs
       push!(cell.neighbours, me)
@@ -64,29 +64,4 @@ struct Propagator
     alert!(me)
     return me
   end
-end
-
-function propagator(f)
-  function (cells...)
-    output = last(cells)
-    inputs = cells[1:end-1]
-    function activate!()
-      inputvalues = map(getindex, inputs)
-      if !any(isunusable, inputvalues)
-        addcontent!(output, f(inputvalues...))
-      end
-    end
-    return Propagator(inputs, activate!)
-  end
-end
-
-function compund_propagator(inputs, tobuild)
-  isbuilt = false
-  function maybebuild()
-    if !(isbuilt || all(isunusable, map(getindex, inputs)))
-      tobuild()
-      isbuilt = true
-    end
-  end
-  return Propagator(inputs, maybebuild)
 end

@@ -20,3 +20,4 @@ end
 Base.pop!(q::WorkQueue) = pop!(q.items)
 Base.isempty(q::WorkQueue) = isempty(q.items)
 Base.length(q::WorkQueue) = length(q.items)
+Base.empty!(q::WorkQueue) = empty!(q.items)

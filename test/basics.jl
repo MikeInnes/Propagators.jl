@@ -14,3 +14,14 @@ let
 
   @test y[] == 4
 end
+
+include("../demos/sqrt.jl")
+
+let
+  x = Cell()
+  y = Cell()
+  sqrt_network(x, y)
+  x[] = 2
+  propagate!()
+  @test y[] ≈ sqrt(2)
+end
